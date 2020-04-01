@@ -1,0 +1,47 @@
+package fr.insalyon.dasi.metier.modele;
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/**
+ *
+ * @author DASI Team
+ */
+@Entity
+public class Spirite extends Medium implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String support;
+
+
+    protected Spirite() {
+    }
+
+    public Spirite(String denomination, String genre, String presentation, String support) {
+        super(denomination,genre,presentation);
+        this.support = denomination;
+    }
+
+    public String getSupport() {
+        return support;
+    }
+
+    public void setSupport(String support) {
+        this.support = support;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+    }
+    
+
+}
