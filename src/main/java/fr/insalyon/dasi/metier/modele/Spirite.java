@@ -1,6 +1,6 @@
 package fr.insalyon.dasi.metier.modele;
 
-import java.io.Serializable;
+import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,18 +12,19 @@ import javax.persistence.Id;
  * @author DASI Team
  */
 @Entity
-public class Spirite extends Medium implements Serializable {
+public class Spirite extends Medium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable=false)
     private String support;
 
 
     protected Spirite() {
     }
 
-    public Spirite(String denomination, String genre, String presentation, String support) {
+    public Spirite(String denomination, Genre genre, String presentation, String support) {
         super(denomination,genre,presentation);
         this.support = denomination;
     }
@@ -40,7 +41,7 @@ public class Spirite extends Medium implements Serializable {
 
     @Override
     public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return "Spirite TOSTRING";
     }
     
 

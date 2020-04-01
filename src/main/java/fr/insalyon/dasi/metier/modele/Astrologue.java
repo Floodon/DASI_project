@@ -1,6 +1,6 @@
 package fr.insalyon.dasi.metier.modele;
 
-import java.io.Serializable;
+import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,19 +12,21 @@ import javax.persistence.Id;
  * @author DASI Team
  */
 @Entity
-public class Astrologue extends Medium implements Serializable{
+public class Astrologue extends Medium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable=false)
     private String promotion;
+    @Column(nullable=false)
     private String formation;
 
 
     protected Astrologue() {
     }
 
-    public Astrologue(String denomination, String genre, String presentation, String promotion, String Formation) {
+    public Astrologue(String denomination, Genre genre, String presentation, String promotion, String Formation) {
         super(denomination,genre,presentation);
         this.promotion = promotion;
         this.formation = formation;
@@ -48,7 +50,7 @@ public class Astrologue extends Medium implements Serializable{
     
     @Override
     public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return "Astro TOSTRING";
     }
     
 

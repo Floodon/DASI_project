@@ -1,33 +1,39 @@
 package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import fr.insalyon.dasi.metier.modele.Personne;
+import fr.insalyon.dasi.metier.modele.Personne.Genre;
+import javax.persistence.Column;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author DASI Team
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Medium implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable=false)
     private String denomination;
+    @Column(nullable=false)
     private Genre genre;
+    @Column(nullable=false)
     private String presentation;
 
 
     protected Medium() {
     }
 
-    public Medium(String denomination, String genre, String presentation) {
+    public Medium(String denomination, Genre genre, String presentation) {
         this.denomination = denomination;
         this.genre = genre;
         this.presentation = presentation;
@@ -37,7 +43,7 @@ public class Medium implements Serializable {
         return denomination;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
@@ -49,7 +55,7 @@ public class Medium implements Serializable {
         this.denomination = denomination;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
@@ -61,7 +67,7 @@ public class Medium implements Serializable {
 
     @Override
     public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return "Medium TOSTRING";
     }
     
 
