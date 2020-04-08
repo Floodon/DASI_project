@@ -1,7 +1,14 @@
 fr\insalyon\dasi\dao\JpaUtil.class
+fr\insalyon\dasi\metier\modele\Consultation_.class
+fr\insalyon\dasi\metier\modele\Personne.class
+fr\insalyon\dasi\metier\modele\ProfilAstral_.class
+fr\insalyon\dasi\metier\modele\ConsultationState.class
+fr\insalyon\dasi\metier\service\Service.class
 fr\insalyon\dasi\metier\modele\Client.class
+fr\insalyon\dasi\metier\modele\Personne_.class
 fr\insalyon\dasi\dao\ClientDao.class
 fr\insalyon\dasi\dao\JpaUtil$1.class
-fr\insalyon\dasi\ihm\console\Main.class
+fr\insalyon\dasi\metier\modele\Personne$Genre.class
+fr\insalyon\dasi\metier\modele\Consultation.class
 fr\insalyon\dasi\ihm\console\Saisie.class
-fr\insalyon\dasi\metier\service\Service.class
+fr\insalyon\dasi\metier\modele\Spirite.class
