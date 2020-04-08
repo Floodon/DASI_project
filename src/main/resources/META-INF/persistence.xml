@@ -3,6 +3,13 @@
   <persistence-unit name="DASI-PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>fr.insalyon.dasi.metier.modele.Personne</class>
+    <class>fr.insalyon.dasi.metier.modele.Astrologue</class>
+    <class>fr.insalyon.dasi.metier.modele.Cartomancien</class>
+    <class>fr.insalyon.dasi.metier.modele.Client</class>
+    <class>fr.insalyon.dasi.metier.modele.Employe</class>
+    <class>fr.insalyon.dasi.metier.modele.Medium</class>
+    <class>fr.insalyon.dasi.metier.modele.ProfilAstral</class>
+    <class>fr.insalyon.dasi.metier.modele.Spirite</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/td-dasi"/>
       <property name="javax.persistence.jdbc.user" value="eboscher"/>

@@ -2,8 +2,8 @@ package fr.insalyon.dasi.metier.modele;
 
 import java.sql.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -13,7 +13,7 @@ public class Client extends Personne {
     
     /* Attributs */
     
-    @OneToOne
+    @Embedded
     @Column(nullable=false)
     private ProfilAstral profilAstral;
     
