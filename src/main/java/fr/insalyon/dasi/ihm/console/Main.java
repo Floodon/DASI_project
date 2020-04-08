@@ -1,7 +1,10 @@
 package fr.insalyon.dasi.ihm.console;
 
 import fr.insalyon.dasi.dao.JpaUtil;
+import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.*;
+import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import fr.insalyon.dasi.metier.service.Service;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,27 +20,16 @@ import javax.persistence.Persistence;
 public class Main {
 
     public static void main(String[] args) {
-
-        // TODO : Pensez à créer une unité de persistance "DASI-PU" et à vérifier son nom dans la classe JpaUtil
-        // Contrôlez l'affichage du log de JpaUtil grâce à la méthode log de la classe JpaUtil
         JpaUtil.init();
-
-        initialiserClients();            // Question 3
-        //testerInscriptionClient();       // Question 4 & 5
-        //testerRechercheClient();         // Question 6
-        //testerListeClients();            // Question 7
-        //testerAuthentificationClient();  // Question 8
-        //saisirInscriptionClient();       // Question 9
-        //saisirRechercheClient();
-
+        initialiserMediums();
         JpaUtil.destroy();
     }
 
-    public static void afficherClient(Client client) {
-        System.out.println("-> " + client);
+    public static void afficherMedium(Medium medium) {
+        System.out.println("-> " + medium);
     }
 
-    public static void initialiserClients() {
+    public static void initialiserMediums() {
         
         System.out.println();
         System.out.println("**** initialiserClients() ****");
@@ -46,22 +38,21 @@ public class Main {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
         EntityManager em = emf.createEntityManager();
 
-        Client ada = new Client("Lovelace", "Ada", "ada.lovelace@insa-lyon.fr", "Ada1012");
-        Client blaise = new Client("Pascal", "Blaise", "blaise.pascal@insa-lyon.fr", "Blaise1906");
-        Client fred = new Client("Fotiadu", "Frédéric", "frederic.fotiadu@insa-lyon.fr", "INSA-Forever");
-        
+        Spirite tran = new Spirite("Professeur Tran",Genre.HOMME, "Votre avenir est devant vous: regardons-le ensemble!", "Marc de café, boule de cristal, oreilles de lapin");
+        Cartomancien irma = new Cartomancien("Mme Irma", Genre.FEMME, "Passionnée de carte Yu-Gi-Oh! depuis sa tendre enfance, Mme Irma sait y faire avec les cartes.");
+        Astrologue martinetto = new Astrologue("Martinetto", Genre.HOMME, "Martinetto est le médium voyance qu'il vous faut! Diplômé de la faculté de quantimnique mézospirituelle de Arvarde et membre honorifique de la Hauta Académie des psiences de Zingapour, il saura se connecter avec les anciens et ainsi établir le pont quantique nécessaire pour que vous puissiez discuter avec vos proches disparus.", "1999", "Faculté de quantimnique mézospirituelle de Arvarde");
         System.out.println();
         System.out.println("** Clients avant persistance: ");
-        afficherClient(ada);
-        afficherClient(blaise);
-        afficherClient(fred);
+        afficherMedium(tran);
+        afficherMedium(irma);
+        afficherMedium(martinetto);
         System.out.println();
 
         try {
             em.getTransaction().begin();
-            em.persist(ada);
-            em.persist(blaise);
-            em.persist(fred);
+            em.persist(tran);
+            em.persist(irma);
+            em.persist(martinetto);
             em.getTransaction().commit();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
@@ -74,16 +65,9 @@ public class Main {
         } finally {
             em.close();
         }
-
-        System.out.println();
-        System.out.println("** Clients après persistance: ");
-        afficherClient(ada);
-        afficherClient(blaise);
-        afficherClient(fred);
-        System.out.println();
     }
 
-    public static void testerInscriptionClient() {
+    /*public static void testerInscriptionClient() {
         
         System.out.println();
         System.out.println("**** testerInscriptionClient() ****");
@@ -307,5 +291,5 @@ public class Main {
         System.out.println("*****************");
         System.out.println();
 
-    }
+    }*/
 }
