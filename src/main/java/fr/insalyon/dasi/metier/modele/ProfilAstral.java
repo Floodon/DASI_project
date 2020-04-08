@@ -20,9 +20,9 @@ public class ProfilAstral implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long ID;
     @Column(nullable=false)
-    private SigneZodiaque signeZodiaque;
+    private String signeZodiaque;
     @Column(nullable=false)
-    private SigneChinois signeChinois;
+    private String signeChinois;
     @Column(nullable=false)
     private String Couleur;
     @Column(nullable=false)
@@ -32,7 +32,7 @@ public class ProfilAstral implements Serializable {
     
     protected ProfilAstral() {}
 
-    public ProfilAstral(SigneZodiaque signeZodiaque, SigneChinois signeChinois, String Couleur, String Animal) {
+    public ProfilAstral(String signeZodiaque, String signeChinois, String Couleur, String Animal) {
         this.signeZodiaque = signeZodiaque;
         this.signeChinois = signeChinois;
         this.Couleur = Couleur;
@@ -45,11 +45,11 @@ public class ProfilAstral implements Serializable {
         return ID;
     }
 
-    public SigneZodiaque getSigneZodiaque() {
+    public String getSigneZodiaque() {
         return signeZodiaque;
     }
 
-    public SigneChinois getSigneChinois() {
+    public String getSigneChinois() {
         return signeChinois;
     }
 
@@ -61,11 +61,11 @@ public class ProfilAstral implements Serializable {
         return Animal;
     }
 
-    public void setSigneZodiaque(SigneZodiaque signeZodiaque) {
+    public void setSigneZodiaque(String signeZodiaque) {
         this.signeZodiaque = signeZodiaque;
     }
 
-    public void setSigneChinois(SigneChinois signeChinois) {
+    public void setSigneChinois(String signeChinois) {
         this.signeChinois = signeChinois;
     }
 
@@ -75,38 +75,6 @@ public class ProfilAstral implements Serializable {
 
     public void setAnimal(String Animal) {
         this.Animal = Animal;
-    }
-    
-    /* Enumeration */
-    
-    public static enum SigneZodiaque {
-        BELIER,
-        TAUREAU,
-        GEMEAUX,
-        CANCER,
-        LION,
-        VIERGE,
-        BALANCE,
-        SCORPION,
-        SAGITTAIRE,
-        CAPRICORNE,
-        VERSEAU,
-        POISSONS
-    }
-    
-    public static enum SigneChinois {
-        RAT,
-        BOEUF,
-        TIGRE,
-        LIEVRE,
-        DRAGON,
-        SERPENT,
-        CHEVAL,
-        CHEVRE,
-        SINGE,
-        COQ,
-        CHIEN,
-        COCHON
     }
     
 }
