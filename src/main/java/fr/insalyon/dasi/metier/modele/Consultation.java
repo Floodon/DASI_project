@@ -6,8 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import fr.insalyon.dasi.metier.modele.Personne.Genre;
-import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -30,22 +29,22 @@ public class Consultation implements Serializable {
     
     @Column()
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Timestamp dateDemande;
+    private Date dateDemande;
     
     @Column()
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Timestamp dateDebut;
+    private Date dateDebut;
     
     @Column()
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Timestamp dateFin;
+    private Date dateFin;
 
 
     protected Consultation() {
         
     }
 
-    public Consultation(Timestamp dateDemande) {
+    public Consultation(Date dateDemande) {
         this.commentaire = null;
         this.dateDemande = dateDemande;
         this.dateDebut = null;
@@ -66,23 +65,23 @@ public class Consultation implements Serializable {
         this.commentaire = commentaire;
     }
 
-    public Timestamp getDateDemande() {
+    public Date getDateDemande() {
         return dateDemande;
     }
 
-    public Timestamp getDateDebut() {
+    public Date getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Timestamp dateDebut) {
+    public void setDateDebut(Date dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Timestamp getDateFin() {
+    public Date getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Timestamp dateFin) {
+    public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
     

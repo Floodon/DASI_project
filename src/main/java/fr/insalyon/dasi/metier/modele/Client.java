@@ -1,6 +1,6 @@
 package fr.insalyon.dasi.metier.modele;
 
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
