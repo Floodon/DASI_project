@@ -2,11 +2,8 @@ package fr.insalyon.dasi.ihm.console;
 
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
-import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.*;
 import fr.insalyon.dasi.metier.modele.Personne.Genre;
-import fr.insalyon.dasi.metier.service.Service;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -15,7 +12,6 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author DASI Team
  */
 public class Main {
 
@@ -42,7 +38,7 @@ public class Main {
         Cartomancien irma = new Cartomancien("Mme Irma", Genre.FEMME, "Passionnée de carte Yu-Gi-Oh! depuis sa tendre enfance, Mme Irma sait y faire avec les cartes.");
         Astrologue martinetto = new Astrologue("Martinetto", Genre.HOMME, "Martinetto est le médium voyance qu'il vous faut! Diplômé de la faculté de quantimnique mézospirituelle de Arvarde et membre honorifique de la Hauta Académie des psiences de Zingapour, il saura se connecter avec les anciens et ainsi établir le pont quantique nécessaire pour que vous puissiez discuter avec vos proches disparus.", "1999", "Faculté de quantimnique mézospirituelle de Arvarde");
         System.out.println();
-        System.out.println("** Clients avant persistance: ");
+        System.out.println("** Mediums avant persistance: ");
         afficherMedium(tran);
         afficherMedium(irma);
         afficherMedium(martinetto);

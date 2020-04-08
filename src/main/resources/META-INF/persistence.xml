@@ -12,7 +12,7 @@
     <class>fr.insalyon.dasi.metier.modele.Spirite</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/td-dasi"/>
-      <property name="javax.persistence.jdbc.user" value="eboscher"/>
+      <property name="javax.persistence.jdbc.user" value="B3402"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="azerty"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

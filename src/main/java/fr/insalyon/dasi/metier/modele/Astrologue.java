@@ -9,7 +9,6 @@ import javax.persistence.Id;
 
 /**
  *
- * @author DASI Team
  */
 @Entity
 public class Astrologue extends Medium {
@@ -26,7 +25,7 @@ public class Astrologue extends Medium {
     protected Astrologue() {
     }
 
-    public Astrologue(String denomination, Genre genre, String presentation, String promotion, String Formation) {
+    public Astrologue(String denomination, Genre genre, String presentation, String promotion, String formation) {
         super(denomination,genre,presentation);
         this.promotion = promotion;
         this.formation = formation;
