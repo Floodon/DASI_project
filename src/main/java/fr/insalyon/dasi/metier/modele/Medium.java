@@ -10,6 +10,7 @@ import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 
 /**
  *
@@ -26,6 +27,7 @@ public class Medium implements Serializable {
     private String denomination;
     @Column(nullable=false)
     private Genre genre;
+    @Lob
     @Column(nullable=false)
     private String presentation;
 
