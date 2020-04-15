@@ -41,7 +41,7 @@ public Spirite(String denomination, Genre genre, String presentation, String sup
 
     @Override
     public String toString() {
-        return "Spirite TOSTRING";
+        return super.toString();
     }
     
 

@@ -3,9 +3,6 @@ package fr.insalyon.dasi.metier.modele;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
@@ -16,9 +13,6 @@ public class ProfilAstral implements Serializable {
     
     /* Attributs */
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long ID;
     @Column(nullable=false)
     private String signeZodiaque;
     @Column(nullable=false)
@@ -40,10 +34,6 @@ public class ProfilAstral implements Serializable {
     }
     
     /* Methodes */
-    
-    public Long getID() {
-        return ID;
-    }
 
     public String getSigneZodiaque() {
         return signeZodiaque;

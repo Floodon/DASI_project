@@ -111,7 +111,7 @@ public class Personne implements Serializable {
 
     @Override
     public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return "[PERSONNE " + id + "], nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
     }
     
     /* Enumerations */
