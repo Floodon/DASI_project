@@ -59,6 +59,16 @@ public class Consultation implements Serializable {
         this.dateDebut = null;
         this.dateFin = null;
     }
+    
+    public Consultation(Date dateDemande, Client client, Employe employe, Medium medium) {
+        this.commentaire = null;
+        this.dateDemande = dateDemande;
+        this.dateDebut = null;
+        this.dateFin = null;
+        this.client = client;
+        this.employe = employe;
+        this.medium = medium;
+    }
 
     /* Getters et Setters */
     
