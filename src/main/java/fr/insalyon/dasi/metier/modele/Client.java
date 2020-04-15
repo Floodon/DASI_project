@@ -1,8 +1,10 @@
 package fr.insalyon.dasi.metier.modele;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -14,6 +16,9 @@ public class Client extends Personne {
     
     @Embedded
     private ProfilAstral profilAstral;
+    
+    @OneToMany(mappedBy = "client")
+    private List<Consultation> mesConsultations;
     
     /* Constructeurs */
 
@@ -32,6 +37,10 @@ public class Client extends Personne {
 
     public void setProfilAstral(ProfilAstral profilAstral) {
         this.profilAstral = profilAstral;
+    }
+    
+    public void ajouterConsultation(Consultation consultation) {
+        this.mesConsultations.add(consultation);
     }
     
 }
