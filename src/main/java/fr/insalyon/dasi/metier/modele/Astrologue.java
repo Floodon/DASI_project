@@ -49,7 +49,7 @@ public class Astrologue extends Medium {
     
     @Override
     public String toString() {
-        return "Astro TOSTRING";
+        return super.toString();
     }
     
 

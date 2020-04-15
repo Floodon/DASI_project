@@ -4,6 +4,9 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.*;
 import fr.insalyon.dasi.metier.modele.Personne.Genre;
+import fr.insalyon.dasi.metier.service.Service;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -18,17 +21,25 @@ public class Main {
     public static void main(String[] args) {
         JpaUtil.init();
         initialiserMediums();
+        testerInscriptionClient();
+        testerAuthentificationClient();
+        testerRechercheClient();
+        testerListeClients();
         JpaUtil.destroy();
     }
 
     public static void afficherMedium(Medium medium) {
         System.out.println("-> " + medium);
     }
+    
+    public static void afficherClient(Client client) {
+        System.out.println("-> " + client);
+    }
 
     public static void initialiserMediums() {
         
         System.out.println();
-        System.out.println("**** initialiserClients() ****");
+        System.out.println("**** initialiserMediums() ****");
         System.out.println();
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
@@ -50,6 +61,13 @@ public class Main {
             em.persist(irma);
             em.persist(martinetto);
             em.getTransaction().commit();
+            
+            System.out.println();
+            System.out.println("** Mediums après persistance: ");
+            afficherMedium(tran);
+            afficherMedium(irma);
+            afficherMedium(martinetto);
+            System.out.println();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
             try {
@@ -63,14 +81,16 @@ public class Main {
         }
     }
 
-    /*public static void testerInscriptionClient() {
+    public static void testerInscriptionClient() {
+        
+        ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
         
         System.out.println();
         System.out.println("**** testerInscriptionClient() ****");
         System.out.println();
         
         Service service = new Service();
-        Client claude = new Client("Chappe", "Claude", "claude.chappe@insa-lyon.fr", "HaCKeR");
+        Client claude = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", "11 avenue des arts", new Date(70, 0, 1));
         Long idClaude = service.inscrireClient(claude);
         if (idClaude != null) {
             System.out.println("> Succès inscription");
@@ -79,7 +99,7 @@ public class Main {
         }
         afficherClient(claude);
 
-        Client hedy = new Client("Lamarr", "Hedy", "hlamarr@insa-lyon.fr", "WiFi");
+        Client hedy = new Client(test, "hlamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedy", "15 avenue Einstein", new Date(75, 6, 15));
         Long idHedy = service.inscrireClient(hedy);
         if (idHedy != null) {
             System.out.println("> Succès inscription");
@@ -88,7 +108,7 @@ public class Main {
         }
         afficherClient(hedy);
 
-        Client hedwig = new Client("Lamarr", "Hedwig Eva Maria", "hlamarr@insa-lyon.fr", "WiFi");
+        Client hedwig = new Client(test, "hem_lamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedwig Eva Maria", "15 avenue Einstein", new Date(76, 5, 10));
         Long idHedwig = service.inscrireClient(hedwig);
         if (idHedwig != null) {
             System.out.println("> Succès inscription");
@@ -162,13 +182,15 @@ public class Main {
         System.out.println();
         
         Service service = new Service();
+        Personne personne;
         Client client;
         String mail;
         String motDePasse;
 
-        mail = "ada.lovelace@insa-lyon.fr";
-        motDePasse = "Ada1012";
-        client = service.authentifierClient(mail, motDePasse);
+        mail = "claude.chappe@insa-lyon.fr";
+        motDePasse = "HaCKeR";
+        personne = service.authentifierPersonne(mail, motDePasse);
+        client = personne == null ? null : service.rechercherClientParId(personne.getId());
         if (client != null) {
             System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
             afficherClient(client);
@@ -176,9 +198,10 @@ public class Main {
             System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
         }
 
-        mail = "ada.lovelace@insa-lyon.fr";
-        motDePasse = "Ada2020";
-        client = service.authentifierClient(mail, motDePasse);
+        mail = "claude.chappe@insa-lyon.fr";
+        motDePasse = "HaCkeR";
+        personne = service.authentifierPersonne(mail, motDePasse);
+        client = personne == null ? null : service.rechercherClientParId(personne.getId());
         if (client != null) {
             System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
             afficherClient(client);
@@ -188,7 +211,8 @@ public class Main {
 
         mail = "etudiant.fictif@insa-lyon.fr";
         motDePasse = "********";
-        client = service.authentifierClient(mail, motDePasse);
+        personne = service.authentifierPersonne(mail, motDePasse);
+        client = personne == null ? null : service.rechercherClientParId(personne.getId());
         if (client != null) {
             System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
             afficherClient(client);
@@ -197,7 +221,7 @@ public class Main {
         }
     }
 
-    public static void saisirInscriptionClient() {
+    /*public static void saisirInscriptionClient() {
         Service service = new Service();
 
         System.out.println();

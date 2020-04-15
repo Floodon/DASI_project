@@ -27,7 +27,7 @@ public class Medium implements Serializable {
     private String denomination;
     @Column(nullable=false)
     private Genre genre;
-    @Lob
+    @Lob // Large data (+ grand que VARCHAR)
     @Column(nullable=false)
     private String presentation;
 
@@ -69,7 +69,7 @@ public class Medium implements Serializable {
 
     @Override
     public String toString() {
-        return "Medium TOSTRING";
+        return "[MEDIUM " + id + "] Nom : " + denomination + ", genre : " + genre;
     }
     
 

@@ -27,7 +27,7 @@ public class Cartomancien extends Medium {
 
     @Override
     public String toString() {
-        return "Carto TOSTRING";
+        return super.toString();
     }
     
 
