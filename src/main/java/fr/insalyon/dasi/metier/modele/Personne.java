@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
  * @author DASI Team
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Personne implements Serializable {
 
     /* Attributs */
