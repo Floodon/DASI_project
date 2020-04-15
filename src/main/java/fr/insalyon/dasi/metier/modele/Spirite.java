@@ -37,11 +37,9 @@ public Spirite(String denomination, Genre genre, String presentation, String sup
         this.support = support;
     }
 
-
-
     @Override
     public String toString() {
-        return "[SPIRITE]" + super.toString();
+        return "[SPIRITE]" + super.toString() + ", support : " + support;
     }
     
 

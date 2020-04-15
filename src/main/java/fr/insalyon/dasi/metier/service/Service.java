@@ -1,16 +1,20 @@
 package fr.insalyon.dasi.metier.service;
 
 import fr.insalyon.dasi.dao.ClientDao;
+import fr.insalyon.dasi.dao.ConsultationDao;
 import fr.insalyon.dasi.dao.EmployeDao;
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.dao.MediumDao;
 import fr.insalyon.dasi.dao.PersonneDao;
 import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Medium;
 import fr.insalyon.dasi.metier.modele.Personne;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +29,7 @@ public class Service {
     protected ClientDao clientDao = new ClientDao();
     protected EmployeDao employeDao = new EmployeDao();
     protected MediumDao mediumDao = new MediumDao();
+    protected ConsultationDao consultationDao = new ConsultationDao();
 
     /* Services d'inscription & authentification */
     
@@ -84,13 +89,13 @@ public class Service {
      * en fournissant la fonction adaptée, au sein d'une structure try - catch
      * adaptée.
      */
-    private <T> T rechercherParId(Long id, Function<Long, T> searchFunction) {
+    private <T> T rechercherParId(Long id, Function<Long, T> searchFunction, Class<T> c) {
         T resultat = null;
         JpaUtil.creerContextePersistance();
         try {
             resultat = searchFunction.apply(id);
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service rechercherClientParId(id)", ex);
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service rechercherParId(id) - objet de type " + c.getCanonicalName(), ex);
             resultat = null;
         } finally {
             JpaUtil.fermerContextePersistance();
@@ -104,7 +109,7 @@ public class Service {
      * @return Le client s'il a été trouvé, NULL sinon
      */
     public Client rechercherClientParId(Long id) {
-        return rechercherParId(id, clientDao::chercherParId);
+        return rechercherParId(id, clientDao::chercherParId, Client.class);
     }
     
     /**
@@ -113,7 +118,7 @@ public class Service {
      * @return Le employe s'il a été trouvé, NULL sinon
      */
     public Employe rechercherEmployeParId(Long id) {
-        return rechercherParId(id, employeDao::chercherParId);
+        return rechercherParId(id, employeDao::chercherParId, Employe.class);
     }
     
     /**
@@ -122,27 +127,31 @@ public class Service {
      * @return Le medium s'il a été trouvé, NULL sinon
      */
     public Medium rechercherMediumParId(Long id) {
-        return rechercherParId(id, mediumDao::chercherParId);
+        return rechercherParId(id, mediumDao::chercherParId, Medium.class);
     }
     
     /* Services fournissant des listes d'éléments */
+    
+    private <T> List<T> listerObjets(Supplier<List<T>> listFunction, Class<T> c) {
+        List<T> resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = listFunction.get();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerObjets() - objets de type " + c.getCanonicalName(), ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
     
     /**
      * Crée puis retourne la liste de tous les clients
      * @return La liste de tous les clients dans la base de données
      */
     public List<Client> listerClients() {
-        List<Client> resultat = null;
-        JpaUtil.creerContextePersistance();
-        try {
-            resultat = clientDao.listerClients();
-        } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerEmployes()", ex);
-            resultat = null;
-        } finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return resultat;
+        return listerObjets(clientDao::listerClients, Client.class);
     }
     
     /**
@@ -150,17 +159,7 @@ public class Service {
      * @return La liste de tous les employes dans la base de données
      */
     public List<Employe> listerEmployes() {
-        List<Employe> resultat = null;
-        JpaUtil.creerContextePersistance();
-        try {
-            resultat = employeDao.listerEmployes();
-        } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerEmployes()", ex);
-            resultat = null;
-        } finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return resultat;
+        return listerObjets(employeDao::listerEmployes, Employe.class);
     }
     
     /**
@@ -168,17 +167,11 @@ public class Service {
      * @return La liste de tous les mediums dans la base de données
      */
     public List<Medium> listerMediums() {
-        List<Medium> resultat = null;
-        JpaUtil.creerContextePersistance();
-        try {
-            resultat = mediumDao.listerMediums();
-        } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerMediums()", ex);
-            resultat = null;
-        } finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return resultat;
+        return listerObjets(mediumDao::listerMediums, Medium.class);
+    }
+    
+    public List<Consultation> listerConsultations(Employe e, Client c, Medium m, Date asked, Date begin, Date end) {
+        return listerObjets(() -> consultationDao.listerConsultations(e, c, m, asked, begin, end), Consultation.class);
     }
 
 }

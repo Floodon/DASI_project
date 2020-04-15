@@ -41,6 +41,10 @@ public class Medium implements Serializable {
         this.presentation = presentation;
     }
 
+    public Long getId() {
+        return id;
+    }
+    
     public String getDenomination() {
         return denomination;
     }

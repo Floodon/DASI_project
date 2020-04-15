@@ -21,6 +21,7 @@ public class Main {
     public static void main(String[] args) {
         JpaUtil.init();
         initialiserMediums();
+        // testerConsultations(); PB avec "lister consultations"... TODO
         testerInscriptionClient();
         testerAuthentificationClient();
         testerRechercheClient();
@@ -36,6 +37,56 @@ public class Main {
         System.out.println("-> " + client);
     }
 
+    public static void testerConsultations() {
+        System.out.println();
+        System.out.println("**** initialiserConsultations() ****");
+        System.out.println();
+        
+        Service service = new Service();
+        
+        ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
+        
+        Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
+        Client c = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", "11 avenue des arts", new Date(70, 0, 1));
+        if (service.inscrireClient(c) == null) System.err.println("Erreur inscription !!!!!");
+        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", "85 rue Lorem Ipsum", new Date(95, 27, 9));
+        
+        Consultation consult = new Consultation(new Date(), c, e, k);
+        Consultation consult2 = new Consultation(new Date(), c, e, k);
+        Consultation consult3 = new Consultation(new Date(), c, e, k);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            em.getTransaction().begin();
+            em.persist(k);
+            em.persist(e);
+            em.persist(consult);
+            em.persist(consult2);
+            em.persist(consult3);
+            em.getTransaction().commit();
+            
+            System.out.println(consult);
+            System.out.println();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
+            try {
+                em.getTransaction().rollback();
+            }
+            catch (IllegalStateException ex2) {
+                // Ignorer cette exception...
+            }
+        } finally {
+            em.close();
+        }
+        
+        List<Consultation> liste = service.listerConsultations(null, null, null, null, null, null);
+        liste.forEach((cons) -> {
+            System.out.println(cons);
+        });
+    }
+    
     public static void initialiserMediums() {
         
         System.out.println();
@@ -166,9 +217,9 @@ public class Main {
         List<Client> listeClients = service.listerClients();
         System.out.println("*** Liste des Clients");
         if (listeClients != null) {
-            for (Client client : listeClients) {
+            listeClients.forEach((client) -> {
                 afficherClient(client);
-            }
+            });
         }
         else {
             System.out.println("=> ERREUR...");

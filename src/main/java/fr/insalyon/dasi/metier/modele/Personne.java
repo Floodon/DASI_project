@@ -22,6 +22,8 @@ public class Personne implements Serializable {
 
     /* Attributs */
     
+    // TODO Ajouter le genre !
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
