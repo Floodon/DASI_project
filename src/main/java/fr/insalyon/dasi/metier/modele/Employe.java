@@ -38,4 +38,9 @@ public class Employe extends Personne {
         disponible = !disponible;
         return disponible;
     }
+    
+    @Override
+    public String toString() {
+        return "[EMPLOYE]" + super.toString();
+    }
 }

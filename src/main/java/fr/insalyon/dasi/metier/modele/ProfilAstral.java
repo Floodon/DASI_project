@@ -18,9 +18,9 @@ public class ProfilAstral implements Serializable {
     @Column(nullable=false)
     private String signeChinois;
     @Column(nullable=false)
-    private String Couleur;
+    private String couleur;
     @Column(nullable=false)
-    private String Animal;
+    private String animal;
 
     /* Constructeurs */
     
@@ -29,8 +29,8 @@ public class ProfilAstral implements Serializable {
     public ProfilAstral(String signeZodiaque, String signeChinois, String Couleur, String Animal) {
         this.signeZodiaque = signeZodiaque;
         this.signeChinois = signeChinois;
-        this.Couleur = Couleur;
-        this.Animal = Animal;
+        this.couleur = Couleur;
+        this.animal = Animal;
     }
     
     /* Methodes */
@@ -44,11 +44,11 @@ public class ProfilAstral implements Serializable {
     }
 
     public String getCouleur() {
-        return Couleur;
+        return couleur;
     }
 
     public String getAnimal() {
-        return Animal;
+        return animal;
     }
 
     public void setSigneZodiaque(String signeZodiaque) {
@@ -59,12 +59,16 @@ public class ProfilAstral implements Serializable {
         this.signeChinois = signeChinois;
     }
 
-    public void setCouleur(String Couleur) {
-        this.Couleur = Couleur;
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
     }
 
-    public void setAnimal(String Animal) {
-        this.Animal = Animal;
+    public void setAnimal(String animal) {
+        this.animal = animal;
     }
     
+    @Override
+    public String toString() {
+        return "[PROFIL ASTRAL] " + signeZodiaque + " / " + signeChinois + " / " + couleur + " / " + animal;
+    }    
 }

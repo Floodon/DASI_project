@@ -111,7 +111,8 @@ public class Personne implements Serializable {
 
     @Override
     public String toString() {
-        return "[PERSONNE " + id + "], nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return "[PERSONNE " + id + "], nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse
+                + ", date de naissance=" + dateNaissance + ", adresse=" + adresse;
     }
     
     /* Enumerations */

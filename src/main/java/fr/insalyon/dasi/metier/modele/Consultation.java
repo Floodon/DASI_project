@@ -52,13 +52,6 @@ public class Consultation implements Serializable {
     protected Consultation() {
         
     }
-
-    public Consultation(Date dateDemande) {
-        this.commentaire = null;
-        this.dateDemande = dateDemande;
-        this.dateDebut = null;
-        this.dateFin = null;
-    }
     
     public Consultation(Date dateDemande, Client client, Employe employe, Medium medium) {
         this.commentaire = null;
@@ -103,6 +96,18 @@ public class Consultation implements Serializable {
     public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Employe getEmploye() {
+        return employe;
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
     
     public ConsultationState getState() {
         if (this.dateDebut == null) {
@@ -116,13 +121,17 @@ public class Consultation implements Serializable {
 
     @Override
     public String toString() {
-        return "Consultation TOSTRING";
+        return "[CONSULTATION " + id + "]"
+                + " Date de demande : " + dateDemande + ", date de début : " + dateDebut + ", date de fin : " + dateFin
+                + "\n- Client : " + client
+                + "\n- Employe : " + employe
+                + "\n- Medium : " + medium;
     }
-}
-
-
-enum ConsultationState {
-    EnAttente,
-    Démarrée,
-    Terminée
+    
+    public static enum ConsultationState {
+        EnAttente,
+        Démarrée,
+        Terminée
+    }
+    
 }

@@ -26,7 +26,7 @@ public class Spirite extends Medium {
 
 public Spirite(String denomination, Genre genre, String presentation, String support) {
         super(denomination,genre,presentation);
-        this.support = denomination;
+        this.support = support;
     }
 
     public String getSupport() {
@@ -41,7 +41,7 @@ public Spirite(String denomination, Genre genre, String presentation, String sup
 
     @Override
     public String toString() {
-        return super.toString();
+        return "[SPIRITE]" + super.toString();
     }
     
 

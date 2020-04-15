@@ -43,4 +43,9 @@ public class Client extends Personne {
         this.mesConsultations.add(consultation);
     }
     
+    @Override
+    public String toString() {
+        return "[CLIENT]" + super.toString() + "\n\t- " + profilAstral;
+    }
+    
 }
