@@ -18,7 +18,6 @@ import javax.persistence.Temporal;
  * @author DASI Team
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Consultation implements Serializable {
 
     @Id
