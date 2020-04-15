@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -38,6 +39,15 @@ public class Consultation implements Serializable {
     @Column()
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateFin;
+    
+    @ManyToOne
+    private Client client;
+    
+    @ManyToOne 
+    private Employe employe;
+            
+    @ManyToOne 
+    private Medium medium;
 
 
     protected Consultation() {
