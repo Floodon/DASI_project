@@ -44,7 +44,7 @@ public class ConsultationDao {
         String where = "";
         for (String cond : conditions) {
             if (where.equals(""))
-                where = "WHERE ";
+                where = " WHERE ";
             else
                 where += " AND ";
             
@@ -52,7 +52,7 @@ public class ConsultationDao {
         }
         
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM consultation c " + where + " ORDER BY c.datedemande ASC", Consultation.class);
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.dateDemande ASC", Consultation.class);
         return query.getResultList();
     }
     

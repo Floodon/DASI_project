@@ -138,7 +138,7 @@ public class Service {
         try {
             resultat = listFunction.get();
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerObjets() - objets de type " + c.getCanonicalName(), ex);
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerObjets() - objets de type " + c.getName(), ex);
             resultat = null;
         } finally {
             JpaUtil.fermerContextePersistance();
@@ -170,7 +170,21 @@ public class Service {
         return listerObjets(mediumDao::listerMediums, Medium.class);
     }
     
+    /**
+     * Crée puis retourne la liste des consultations filtrés par les champs
+     * en paramètre (un paramètre null indique qu'aucun filtre particulier n'est
+     * a utiliser pour le champ en question).
+     * @param e     Champ employe
+     * @param c     Champ client
+     * @param m     Champ medium
+     * @param asked Date de demande
+     * @param begin Date de début
+     * @param end   Date de fin
+     * @return      Une liste de consultation respectant les critères de recherches.
+     */
     public List<Consultation> listerConsultations(Employe e, Client c, Medium m, Date asked, Date begin, Date end) {
+        // Lambda expression pour pouvoir utiliser la méthode listerConsultation
+        // en paramètre de "listerObjets()"
         return listerObjets(() -> consultationDao.listerConsultations(e, c, m, asked, begin, end), Consultation.class);
     }
 

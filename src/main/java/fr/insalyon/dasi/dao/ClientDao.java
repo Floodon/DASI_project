@@ -7,7 +7,6 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author DASI Team
  */
 public class ClientDao {
     

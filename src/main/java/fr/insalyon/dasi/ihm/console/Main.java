@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         JpaUtil.init();
         initialiserMediums();
-        // testerConsultations(); PB avec "lister consultations"... TODO
+        testerConsultations(); //PB avec "lister consultations"... TODO
         testerInscriptionClient();
         testerAuthentificationClient();
         testerRechercheClient();
@@ -47,7 +47,7 @@ public class Main {
         ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
         
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
-        Client c = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", "11 avenue des arts", new Date(70, 0, 1));
+        Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", "11 avenue des arts", new Date(70, 0, 1));
         if (service.inscrireClient(c) == null) System.err.println("Erreur inscription !!!!!");
         Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", "85 rue Lorem Ipsum", new Date(95, 27, 9));
         
