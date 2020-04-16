@@ -58,8 +58,26 @@ public class ConsultationDao {
         
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC", Consultation.class);
-        System.out.println("\n\n\n" + "SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC" + "\n\n\n");
+        //System.out.println("\n\n\n" + "SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC" + "\n\n\n");
         return query.getResultList();
+    }
+    
+    public List<Client> clientsServis(Employe e) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Client> query = em.createQuery(
+                "SELECT DISTINCT cli FROM Consultation c JOIN c.client cli WHERE c.employe.id = " + e.getId(),
+                Client.class
+        );
+        return query.getResultList();
+    }
+    
+    public Integer nbrConsultationMedium(Medium m) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery(
+                "SELECT c FROM Consultation c WHERE c.medium.id = " + m.getId(),
+                Consultation.class
+        );
+        return query.getResultList().size();
     }
     
 }

@@ -7,6 +7,7 @@ import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import fr.insalyon.dasi.metier.service.Service;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -40,13 +41,13 @@ public class Main {
     public static void testerConsultations() {
         System.out.println();
         System.out.println("**** initialiserConsultations() ****");
-        System.out.println();
         
         Service service = new Service();
         
         ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
         
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
+        Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
         Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", "11 avenue des arts", new Date(70, 0, 1));
         Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", "88 rue du n'importe quoi", new Date(70, 6, 6));
         Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", "85 rue Lorem Ipsum", new Date(95, 27, 9));
@@ -63,6 +64,7 @@ public class Main {
             em.getTransaction().begin();
             
             em.persist(k);
+            em.persist(d);
             em.persist(c);
             em.persist(c2);
             em.persist(e);
@@ -85,10 +87,35 @@ public class Main {
             em.close();
         }
         
+        System.out.println();
+        System.out.println("** Listage des consultations avec filtre **");
+        
         List<Consultation> liste = service.listerConsultations(null, null, null, consult.getDateDemande(), null, null);
         liste.forEach((cons) -> {
             System.out.println(cons);
         });
+        
+        System.out.println();
+        System.out.println("** Liste des clients par employés **");
+        
+        Map<Employe, List<Client>> clientsParEmploye = service.clientsParEmploye();
+        clientsParEmploye.forEach((emp, clients) -> 
+            System.out.println("- " + emp.getNom() + " " + emp.getPrenom() + " : "
+                + clients.stream().map(client -> client.getId() + ", ").reduce("", (s1, s2) -> s1 + s2)
+            )
+        );
+        
+        System.out.println();
+        System.out.println("** Nombre de consultation par médium **");
+        
+        Map<Medium, Integer> consultMediums = service.NbrConsultationsParMedium();
+        consultMediums.forEach((m, n) -> System.out.println("- " + m.getDenomination() + " : " + n + " consultations"));
+        
+        System.out.println();
+        System.out.println("** Top des médiums **");
+        
+        List<Medium> topMedium = service.topMedium(5);
+        topMedium.forEach(System.out::println);
     }
     
     public static void initialiserMediums() {

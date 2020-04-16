@@ -12,7 +12,9 @@ import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Medium;
 import fr.insalyon.dasi.metier.modele.Personne;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -188,4 +190,80 @@ public class Service {
         return listerObjets(() -> consultationDao.listerConsultations(e, c, m, asked, begin, end), Consultation.class);
     }
 
+    /* Autres services */
+    
+    /**
+     * Renvoie une map associant à chaque employe la liste des clients qu'il a servi
+     * @return Une map Employe - Liste de client ou null en cas d'erreur
+     */
+    public Map<Employe, List<Client>> clientsParEmploye() {
+        Map<Employe, List<Client>> resultat = new HashMap<>();
+        
+        JpaUtil.creerContextePersistance();
+        try {
+            List<Employe> listeEmployes = employeDao.listerEmployes();
+            for (Employe e : listeEmployes) {
+                resultat.put(e, consultationDao.clientsServis(e));
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service clientsParEmploye()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        
+        return resultat;
+    }
+    
+    /**
+     * Renvoie une map associant à chaque medium le nombre de consultation qu'il
+     * a "effectue".
+     * @return Une map Medium - Nombre de consultation ou null en cas d'erreur
+     */
+    public Map<Medium, Integer> NbrConsultationsParMedium() {
+        Map<Medium, Integer> resultat = new HashMap<>();
+        
+        JpaUtil.creerContextePersistance();
+        try {
+            List<Medium> listeMediums = mediumDao.listerMediums();
+            for (Medium m : listeMediums) {
+                resultat.put(m, consultationDao.nbrConsultationMedium(m));
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service NbrConsultationsParMedium()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        
+        return resultat;
+    }
+    
+    /**
+     * Renvoie une liste triée des nbrToKeep mediums les plus demandés (càd ceux
+     * qui ont le plus de consultation les référençant), triée dans l'ordre
+     * décroissant.
+     * @param nbrToKeep Nombre de mediums à conserver dans la liste
+     * @return Une listre triée dans l'ordre décroissant du nombre de consultation
+     * et tronquée à nbrToKeep mediums.
+     */
+    public List<Medium> topMedium(int nbrToKeep) {
+        List<Medium> resultat = null;
+        
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = mediumDao.listerMediums();
+            resultat.sort((m1, m2) -> consultationDao.nbrConsultationMedium(m2) - consultationDao.nbrConsultationMedium(m1));
+            nbrToKeep = nbrToKeep > resultat.size() ? resultat.size() : nbrToKeep;
+            resultat.subList(0, nbrToKeep);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service topMedium()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        
+        return resultat;
+    }
+    
 }
