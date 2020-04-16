@@ -20,12 +20,12 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
-        initialiserMediums();
-        testerConsultations(); //PB avec "lister consultations"... TODO
-        testerInscriptionClient();
-        testerAuthentificationClient();
-        testerRechercheClient();
-        testerListeClients();
+//        initialiserMediums();
+        testerConsultations();
+//        testerInscriptionClient();
+//        testerAuthentificationClient();
+//        testerRechercheClient();
+//        testerListeClients();
         JpaUtil.destroy();
     }
 
@@ -48,27 +48,31 @@ public class Main {
         
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
         Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", "11 avenue des arts", new Date(70, 0, 1));
-        if (service.inscrireClient(c) == null) System.err.println("Erreur inscription !!!!!");
+        Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", "88 rue du n'importe quoi", new Date(70, 6, 6));
         Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", "85 rue Lorem Ipsum", new Date(95, 27, 9));
+        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", "70 rue Dolor Amet", new Date(92, 4, 3));
         
-        Consultation consult = new Consultation(new Date(), c, e, k);
+        Consultation consult = new Consultation(new Date(), c2, e, k);
         Consultation consult2 = new Consultation(new Date(), c, e, k);
-        Consultation consult3 = new Consultation(new Date(), c, e, k);
+        Consultation consult3 = new Consultation(new Date(), c, e2, k);
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
         EntityManager em = emf.createEntityManager();
         
         try {
             em.getTransaction().begin();
+            
             em.persist(k);
+            em.persist(c);
+            em.persist(c2);
             em.persist(e);
+            em.persist(e2);
+            
             em.persist(consult);
             em.persist(consult2);
             em.persist(consult3);
-            em.getTransaction().commit();
             
-            System.out.println(consult);
-            System.out.println();
+            em.getTransaction().commit();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
             try {
@@ -81,7 +85,7 @@ public class Main {
             em.close();
         }
         
-        List<Consultation> liste = service.listerConsultations(null, null, null, null, null, null);
+        List<Consultation> liste = service.listerConsultations(null, null, null, consult.getDateDemande(), null, null);
         liste.forEach((cons) -> {
             System.out.println(cons);
         });

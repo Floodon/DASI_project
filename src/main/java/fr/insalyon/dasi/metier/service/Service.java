@@ -177,9 +177,9 @@ public class Service {
      * @param e     Champ employe
      * @param c     Champ client
      * @param m     Champ medium
-     * @param asked Date de demande
-     * @param begin Date de début
-     * @param end   Date de fin
+     * @param asked Date de demande (seule la date est importante, pas le timestamp)
+     * @param begin Date de début (seule la date est importante, pas le timestamp)
+     * @param end   Date de fin (seule la date est importante, pas le timestamp)
      * @return      Une liste de consultation respectant les critères de recherches.
      */
     public List<Consultation> listerConsultations(Employe e, Client c, Medium m, Date asked, Date begin, Date end) {
