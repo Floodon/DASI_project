@@ -22,8 +22,6 @@ public class Personne implements Serializable {
 
     /* Attributs */
     
-    // TODO Ajouter le genre !
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +36,8 @@ public class Personne implements Serializable {
     @Column(nullable=false)
     private String prenom;
     @Column(nullable=false)
+    private Genre genre;
+    @Column(nullable=false)
     private String adresse;
     @Column(nullable=false)
     @Temporal(value=TemporalType.DATE)
@@ -48,11 +48,12 @@ public class Personne implements Serializable {
     protected Personne() {
     }
 
-    public Personne(String mail, String motDePasse, String nom, String prenom, String adresse, Date dateNaissance) {
+    public Personne(String mail, String motDePasse, String nom, String prenom, Genre genre, String adresse, Date dateNaissance) {
         this.mail = mail;
         this.motDePasse = motDePasse;
         this.nom = nom;
         this.prenom = prenom;
+        this.genre = genre;
         this.adresse = adresse;
         this.dateNaissance = dateNaissance;
     }
@@ -77,6 +78,14 @@ public class Personne implements Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public String getMail() {

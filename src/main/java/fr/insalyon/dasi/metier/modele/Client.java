@@ -24,8 +24,8 @@ public class Client extends Personne {
 
     protected Client() {}
 
-    public Client(ProfilAstral profilAstral, String mail, String motDePasse, String nom, String prenom, String adresse, Date dateNaissance) {
-        super(mail, motDePasse, nom, prenom, adresse, dateNaissance);
+    public Client(ProfilAstral profilAstral, String mail, String motDePasse, String nom, String prenom, Genre genre, String adresse, Date dateNaissance) {
+        super(mail, motDePasse, nom, prenom, genre, adresse, dateNaissance);
         this.profilAstral = profilAstral;
     }
     

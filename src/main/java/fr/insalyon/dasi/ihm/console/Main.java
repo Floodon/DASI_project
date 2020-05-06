@@ -48,10 +48,10 @@ public class Main {
         
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
         Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
-        Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", "11 avenue des arts", new Date(70, 0, 1));
-        Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", "88 rue du n'importe quoi", new Date(70, 6, 6));
-        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", "85 rue Lorem Ipsum", new Date(95, 27, 9));
-        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", "70 rue Dolor Amet", new Date(92, 4, 3));
+        Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
+        Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", new Date(70, 6, 6));
+        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", new Date(95, 27, 9));
+        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", new Date(92, 4, 3));
         
         Consultation consult = new Consultation(new Date(), c2, e, k);
         Consultation consult2 = new Consultation(new Date(), c, e, k);
@@ -172,7 +172,7 @@ public class Main {
         System.out.println();
         
         Service service = new Service();
-        Client claude = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", "11 avenue des arts", new Date(70, 0, 1));
+        Client claude = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
         Long idClaude = service.inscrireClient(claude);
         if (idClaude != null) {
             System.out.println("> Succès inscription");
@@ -181,7 +181,7 @@ public class Main {
         }
         afficherClient(claude);
 
-        Client hedy = new Client(test, "hlamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedy", "15 avenue Einstein", new Date(75, 6, 15));
+        Client hedy = new Client(test, "hlamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedy", Genre.HOMME, "15 avenue Einstein", new Date(75, 6, 15));
         Long idHedy = service.inscrireClient(hedy);
         if (idHedy != null) {
             System.out.println("> Succès inscription");
@@ -190,7 +190,7 @@ public class Main {
         }
         afficherClient(hedy);
 
-        Client hedwig = new Client(test, "hem_lamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedwig Eva Maria", "15 avenue Einstein", new Date(76, 5, 10));
+        Client hedwig = new Client(test, "hem_lamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedwig Eva Maria", Genre.FEMME, "15 avenue Einstein", new Date(76, 5, 10));
         Long idHedwig = service.inscrireClient(hedwig);
         if (idHedwig != null) {
             System.out.println("> Succès inscription");

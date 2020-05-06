@@ -80,4 +80,34 @@ public class ConsultationDao {
         return query.getResultList().size();
     }
     
+    /**
+     * Crée et persiste une consultation avec le client et le medium demandé.
+     * La consultation aura comme date de demande la date actuelle.
+     * @param c Le client demandant la consultation
+     * @param m Le medium demandé
+     * @return null si aucun employé du bon genre est trouvé, la consultation créée sinon.
+     */
+    public Consultation creerConsultationMaintenant(Client c, Medium m) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        
+        // recherche d'employe disponible
+        TypedQuery<Employe> query = em.createQuery(
+                "SELECT e FROM Consultation c, c.employe e WHERE c.dateFin = NULL AND c.employe.genre = :genre",
+                Employe.class
+        );
+        query.setParameter("id", m.getGenre());
+        
+        List<Employe> result = query.getResultList();
+        if (result.isEmpty()) { // Aucun employe dispo...
+            return null;
+        }
+        Employe e = result.get(0);
+        
+        // creation + persistence de la consultation avec l'employe trouve
+        Consultation consultation = new Consultation(new Date(), c, e, m);
+        em.persist(consultation);
+        
+        return consultation;
+    }
+    
 }

@@ -69,19 +69,38 @@ public class Service {
         Personne resultat = null;
         JpaUtil.creerContextePersistance();
         try {
-            // Recherche de la personne : est-ce un employé ?
-            Personne p = personneDao.chercherParMail(mail);
-            // Vérification du mot de passe
+            // Recherche de la personne : est-ce un client ?
+            Personne p = clientDao.chercherParMail(mail);
             if (p != null && p.getMotDePasse().equals(motDePasse)) {
                 resultat = p;
+            } else { // Sinon, est-ce un employe ?
+                p = employeDao.chercherParMail(mail);
+                if (p != null && p.getMotDePasse().equals(motDePasse)) {
+                    resultat = p;
+                }
             }
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service authentifierClient(mail,motDePasse)", ex);
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service authentifierPersonne(mail,motDePasse)", ex);
             resultat = null;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
         return resultat;
+    }
+    
+    /* Services liées aux consultations */
+    
+    /**
+     * Créer une consultation - avec la date actuelle comme date de demande -
+     * dont le medium et le client sont précisés. L'employe sera choisi parmi
+     * les employes disponibles dont le genre correspond.
+     * @param   c Le client ayant demandé la consultation
+     * @param   m Le medium demandé pour la consultation
+     * @return  La consultation créée, null si aucun employe
+     *          valide n'est disponible pour le moment
+     */
+    public Consultation demanderConsultation(Client c, Medium m) {
+        return consultationDao.creerConsultationMaintenant(c, m);
     }
     
     /* Services de recherche */
