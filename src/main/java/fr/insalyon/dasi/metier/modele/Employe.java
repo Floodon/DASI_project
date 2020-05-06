@@ -2,18 +2,12 @@ package fr.insalyon.dasi.metier.modele;
 
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 /**
  *
  */
 @Entity
 public class Employe extends Personne {
-    
-    /* Attributs */
-    
-    @Transient
-    private Boolean disponible = true;
 
     /* Constructeurs */
     
@@ -25,19 +19,6 @@ public class Employe extends Personne {
     }
     
     /* Methode */
-    
-    public Boolean isDisponible() {
-        return disponible;
-    }
-    
-    public void setDisponible(Boolean d) {
-        disponible = d;
-    }
-    
-    public Boolean toggleDisponible() {
-        disponible = !disponible;
-        return disponible;
-    }
     
     @Override
     public String toString() {
