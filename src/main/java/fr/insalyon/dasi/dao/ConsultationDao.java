@@ -92,10 +92,12 @@ public class ConsultationDao {
         
         // recherche d'employe disponible
         TypedQuery<Employe> query = em.createQuery(
-                "SELECT e FROM Consultation c, c.employe e WHERE c.dateFin = NULL AND c.employe.genre = :genre",
+                "SELECT e FROM Employe e WHERE e.genre = :genre"
+              + " EXCEPT "
+              + "SELECT e FROM Consultation c, c.employe e WHERE c.dateFin IS NULL AND e.genre = :genre",
                 Employe.class
         );
-        query.setParameter("id", m.getGenre());
+        query.setParameter("genre", m.getGenre());
         
         List<Employe> result = query.getResultList();
         if (result.isEmpty()) { // Aucun employe dispo...
@@ -110,4 +112,40 @@ public class ConsultationDao {
         return consultation;
     }
     
+    public Consultation obtenirConsultationEnCours(Employe e) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery(
+                "SELECT c FROM Consultation c WHERE c.dateFin = NULL AND c.employe.id = :id",
+                Consultation.class
+        );
+        query.setParameter("id", e.getId());
+        
+        List<Consultation> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
+    }
+    
+    public boolean lancerConsultation(Consultation c) {
+        if (c.getDateDebut() != null) {
+            return false;
+        }
+        
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        c.setDateDebut(new Date());
+        em.merge(c);
+        
+        return true;
+    }
+    
+    public boolean terminerConsultation(Consultation c, String commentaire) {
+        if (c.getDateFin() != null || c.getDateDebut() == null) {
+            return false;
+        }
+        
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        c.setDateDebut(new Date());
+        c.setCommentaire(commentaire);
+        em.merge(c);
+        
+        return true;
+    }
 }

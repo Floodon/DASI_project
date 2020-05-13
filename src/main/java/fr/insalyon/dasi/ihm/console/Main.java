@@ -52,6 +52,7 @@ public class Main {
         Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", new Date(70, 6, 6));
         Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", new Date(95, 27, 9));
         Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", new Date(92, 4, 3));
+        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", new Date(89, 12, 12));
         
         Consultation consult = new Consultation(new Date(), c2, e, k);
         Consultation consult2 = new Consultation(new Date(), c, e, k);
@@ -69,6 +70,7 @@ public class Main {
             em.persist(c2);
             em.persist(e);
             em.persist(e2);
+            em.persist(e3);
             
             em.persist(consult);
             em.persist(consult2);
@@ -116,6 +118,16 @@ public class Main {
         
         List<Medium> topMedium = service.topMedium(5);
         topMedium.forEach(System.out::println);
+        
+        System.out.println();
+        System.out.println("** Lancement et terminaison des consultations **");
+        
+        Consultation consult4 = service.demanderConsultation(c, k);
+        System.out.println(consult4);
+        service.lancerConsultation(consult4);
+        System.out.println(consult4);
+        service.terminerConsultation(consult4, "Ahah commentaire go brrrr");
+        System.out.println(consult4);
     }
     
     public static void initialiserMediums() {

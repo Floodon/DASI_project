@@ -100,7 +100,88 @@ public class Service {
      *          valide n'est disponible pour le moment
      */
     public Consultation demanderConsultation(Client c, Medium m) {
-        return consultationDao.creerConsultationMaintenant(c, m);
+        Consultation resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            JpaUtil.ouvrirTransaction();
+            resultat = consultationDao.creerConsultationMaintenant(c, m);
+            JpaUtil.validerTransaction();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service demanderConsultation(consultation)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    /**
+     * Retourne, si elle existe, la consultation en cours liée à l'employe donné
+     * @param e L'employe dont on recherche la consultation en cours
+     * @return La consultation que l'employe effectue actuellement, null si
+     * l'employe est disponible
+     */
+    public Consultation obtenirConsultationEnCours(Employe e) {
+        Consultation resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = consultationDao.obtenirConsultationEnCours(e);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service obtenirConsultationEnCours(consultation)", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    /**
+     * Permet de passer une consultation au statut "lancée" en inscrivant comme
+     * date de début la date actuelle
+     * @param c La consultation à démarrer
+     * @return true si le statut a pu être modifié, false sinon
+     */
+    public boolean lancerConsultation(Consultation c) {
+        boolean resultat = false;
+        JpaUtil.creerContextePersistance();
+        try {
+            JpaUtil.ouvrirTransaction();
+            resultat = consultationDao.lancerConsultation(c);
+            JpaUtil.validerTransaction();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service lancerConsultation(consultation)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = false;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    /**
+     * Permet de passer une consultation au statut "terminée" en inscrivant comme
+     * date de fin la date actuelle et dans son commentaire un commentaire passé
+     * en paramètre.
+     * @param c La consultation à terminer
+     * @param commentaire Le commentaire de fin de consultation à enregistrer
+     * @return true si le statut a pu être modifié, false sinon
+     */
+    public boolean terminerConsultation(Consultation c, String commentaire) {
+        boolean resultat = false;
+        JpaUtil.creerContextePersistance();
+        try {
+            JpaUtil.ouvrirTransaction();
+            resultat = consultationDao.terminerConsultation(c, commentaire);
+            JpaUtil.validerTransaction();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service terminerConsultation(consultation,commentaire)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = false;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
     }
     
     /* Services de recherche */
