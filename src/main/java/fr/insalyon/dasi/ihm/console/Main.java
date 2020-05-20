@@ -21,8 +21,9 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
+        peuplerBDD();
 //        initialiserMediums();
-        testerConsultations();
+//        testerConsultations();
 //        testerInscriptionClient();
 //        testerAuthentificationClient();
 //        testerRechercheClient();
@@ -36,6 +37,54 @@ public class Main {
     
     public static void afficherClient(Client client) {
         System.out.println("-> " + client);
+    }
+    
+    public static void peuplerBDD() {
+        ProfilAstral pa = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
+        ProfilAstral pa2 = new ProfilAstral("Verseau", "Cochon", "Jade", "Carpe koi");
+        
+        Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
+        Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
+        Client c = new Client(pa, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
+        Client c2 = new Client(pa2, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", new Date(70, 6, 6));
+        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Vincent", Genre.HOMME, "85 rue Lorem Ipsum", new Date(95, 27, 9));
+        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", new Date(92, 4, 3));
+        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", new Date(89, 12, 12));
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
+        EntityManager em = emf.createEntityManager();
+        
+        Consultation consult = new Consultation(new Date(), c2, e, d);
+        Consultation consult2 = new Consultation(new Date(), c, e2, k);
+        Consultation consult3 = new Consultation(new Date(), c, e2, k);
+        
+        try {
+            em.getTransaction().begin();
+            
+            em.persist(k);
+            em.persist(d);
+            em.persist(c);
+            em.persist(c2);
+            em.persist(e);
+            em.persist(e2);
+            em.persist(e3);
+            
+            em.persist(consult);
+            em.persist(consult2);
+            em.persist(consult3);
+            
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
+            try {
+                em.getTransaction().rollback();
+            }
+            catch (IllegalStateException ex2) {
+                // Ignorer cette exception...
+            }
+        } finally {
+            em.close();
+        }
     }
 
     public static void testerConsultations() {
