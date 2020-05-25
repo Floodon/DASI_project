@@ -109,11 +109,11 @@ public class Consultation implements Serializable {
     
     public ConsultationState getState() {
         if (this.dateDebut == null) {
-            return ConsultationState.EnAttente;
+            return ConsultationState.EN_ATTENTE;
         } else if (this.dateFin == null) {
-            return ConsultationState.Démarrée;
+            return ConsultationState.DEMARREE;
         } else {
-            return ConsultationState.Terminée;
+            return ConsultationState.TERMINEE;
         }
     }
 
@@ -127,9 +127,9 @@ public class Consultation implements Serializable {
     }
     
     public static enum ConsultationState {
-        EnAttente,
-        Démarrée,
-        Terminée
+        EN_ATTENTE,
+        DEMARREE,
+        TERMINEE
     }
     
 }
