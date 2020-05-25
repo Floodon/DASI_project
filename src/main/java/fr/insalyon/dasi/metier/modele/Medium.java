@@ -18,7 +18,7 @@ import javax.persistence.Lob;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Medium implements Serializable {
+public abstract class Medium implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +69,7 @@ public class Medium implements Serializable {
         this.presentation = presentation;
     }
     
-    
+    public abstract String getType();
 
     @Override
     public String toString() {

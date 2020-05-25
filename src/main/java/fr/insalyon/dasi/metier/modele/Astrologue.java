@@ -46,6 +46,11 @@ public class Astrologue extends Medium {
     public void setFormation(String formation) {
         this.formation = formation;
     }
+
+    @Override
+    public String getType() {
+        return "Astrologue";
+    }
     
     @Override
     public String toString() {
