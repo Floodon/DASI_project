@@ -55,6 +55,9 @@ public class Main {
         
         Consultation consult = new Consultation(new Date(), c2, e, d);
         Consultation consult2 = new Consultation(new Date(), c, e2, k);
+        consult2.setDateDebut(new Date());
+        consult2.setDateFin(new Date());
+        consult2.setCommentaire("Commentaire intéressant");
         Consultation consult3 = new Consultation(new Date(), c, e2, k);
         
         try {
