@@ -22,14 +22,14 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
-//        peuplerBDD();
+        peuplerBDD();
 //        initialiserMediums();
 //        testerConsultations();
 //        testerInscriptionClient();
 //        testerAuthentificationClient();
 //        testerRechercheClient();
 //        testerListeClients();
-        testerAstroApi();
+//        testerAstroApi();
         JpaUtil.destroy();
     }
 
