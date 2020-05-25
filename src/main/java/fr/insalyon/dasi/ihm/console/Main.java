@@ -5,6 +5,7 @@ import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.*;
 import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import fr.insalyon.dasi.metier.service.Service;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +22,14 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
-        peuplerBDD();
+//        peuplerBDD();
 //        initialiserMediums();
 //        testerConsultations();
 //        testerInscriptionClient();
 //        testerAuthentificationClient();
 //        testerRechercheClient();
 //        testerListeClients();
+        testerAstroApi();
         JpaUtil.destroy();
     }
 
@@ -39,17 +41,14 @@ public class Main {
         System.out.println("-> " + client);
     }
     
-    public static void peuplerBDD() {
-        ProfilAstral pa = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
-        ProfilAstral pa2 = new ProfilAstral("Verseau", "Cochon", "Jade", "Carpe koi");
-        
+    public static void peuplerBDD() {        
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
         Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
-        Client c = new Client(pa, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
-        Client c2 = new Client(pa2, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", new Date(70, 6, 6));
-        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Vincent", Genre.HOMME, "85 rue Lorem Ipsum", new Date(95, 27, 9));
-        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", new Date(92, 4, 3));
-        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", new Date(89, 12, 12));
+        Client c = new Client("mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", "0601020304", new Date(70, 0, 1));
+        Client c2 = new Client("mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", "0709080706", new Date(70, 6, 6));
+        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", "0612345678", new Date(95, 27, 9));
+        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", "0611121314", new Date(92, 4, 3));
+        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", "0722334455", new Date(89, 12, 12));
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
         EntityManager em = emf.createEntityManager();
@@ -86,22 +85,43 @@ public class Main {
             em.close();
         }
     }
-
-    public static void testerConsultations() {
+    
+    public static void testerAstroApi() {
         System.out.println();
-        System.out.println("**** initialiserConsultations() ****");
+        System.out.println("**** testerAstropApi() ****");
         
         Service service = new Service();
         
-        ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
+        Client c = new Client("mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", "0600000000", new Date(70, 0, 1));
+        Client c2 = new Client("mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", "0701010101", new Date(70, 6, 6));
+        
+        System.out.println(c);
+        System.out.println(c2);
+        
+        try {
+            for (String s : service.getPredictions(c, 3, 4, 1)) {
+                System.out.println(s);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println();
+    }
+
+    public static void testerConsultations() {
+        System.out.println();
+        System.out.println("**** testerConsultations() ****");
+        
+        Service service = new Service();
         
         Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
         Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
-        Client c = new Client(test, "mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
-        Client c2 = new Client(test, "mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", new Date(70, 6, 6));
-        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", new Date(95, 27, 9));
-        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", new Date(92, 4, 3));
-        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", new Date(89, 12, 12));
+        Client c = new Client("mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", "0601020304", new Date(70, 0, 1));
+        Client c2 = new Client("mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", "0709080706", new Date(70, 6, 6));
+        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", "0612345678", new Date(95, 27, 9));
+        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", "0611121314", new Date(92, 4, 3));
+        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", "0722334455", new Date(89, 12, 12));
         
         Consultation consult = new Consultation(new Date(), c2, e, k);
         Consultation consult2 = new Consultation(new Date(), c, e, k);
@@ -224,16 +244,13 @@ public class Main {
         }
     }
 
-    public static void testerInscriptionClient() {
-        
-        ProfilAstral test = new ProfilAstral("Gémeau", "Dragon", "Orange", "Ornythorinque");
-        
+    public static void testerInscriptionClient() {        
         System.out.println();
         System.out.println("**** testerInscriptionClient() ****");
         System.out.println();
         
         Service service = new Service();
-        Client claude = new Client(test, "claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", Genre.HOMME, "11 avenue des arts", new Date(70, 0, 1));
+        Client claude = new Client("claude.chappe@insa-lyon.fr", "HaCKeR", "Chappe", "Claude", Genre.HOMME, "11 avenue des arts", "0600000000", new Date(70, 0, 1));
         Long idClaude = service.inscrireClient(claude);
         if (idClaude != null) {
             System.out.println("> Succès inscription");
@@ -242,7 +259,7 @@ public class Main {
         }
         afficherClient(claude);
 
-        Client hedy = new Client(test, "hlamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedy", Genre.HOMME, "15 avenue Einstein", new Date(75, 6, 15));
+        Client hedy = new Client("hlamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedy", Genre.HOMME, "15 avenue Einstein", "0700112233", new Date(75, 6, 15));
         Long idHedy = service.inscrireClient(hedy);
         if (idHedy != null) {
             System.out.println("> Succès inscription");
@@ -251,7 +268,7 @@ public class Main {
         }
         afficherClient(hedy);
 
-        Client hedwig = new Client(test, "hem_lamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedwig Eva Maria", Genre.FEMME, "15 avenue Einstein", new Date(76, 5, 10));
+        Client hedwig = new Client("hem_lamarr@insa-lyon.fr", "WiFi", "Lamarr", "Hedwig Eva Maria", Genre.FEMME, "15 avenue Einstein", "0698876554", new Date(76, 5, 10));
         Long idHedwig = service.inscrireClient(hedwig);
         if (idHedwig != null) {
             System.out.println("> Succès inscription");

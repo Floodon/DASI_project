@@ -40,6 +40,8 @@ public class Personne implements Serializable {
     @Column(nullable=false)
     private String adresse;
     @Column(nullable=false)
+    private String telephone;
+    @Column(nullable=false)
     @Temporal(value=TemporalType.DATE)
     private Date dateNaissance;
 
@@ -48,13 +50,15 @@ public class Personne implements Serializable {
     protected Personne() {
     }
 
-    public Personne(String mail, String motDePasse, String nom, String prenom, Genre genre, String adresse, Date dateNaissance) {
+    public Personne(String mail, String motDePasse, String nom, String prenom,
+                    Genre genre, String adresse, String telephone, Date dateNaissance) {
         this.mail = mail;
         this.motDePasse = motDePasse;
         this.nom = nom;
         this.prenom = prenom;
         this.genre = genre;
         this.adresse = adresse;
+        this.telephone = telephone;
         this.dateNaissance = dateNaissance;
     }
 
@@ -112,6 +116,14 @@ public class Personne implements Serializable {
         this.adresse = adresse;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public Date getDateNaissance() {
         return dateNaissance;
     }
@@ -123,7 +135,7 @@ public class Personne implements Serializable {
     @Override
     public String toString() {
         return "[PERSONNE " + id + "], nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse
-                + ", date de naissance=" + dateNaissance + ", adresse=" + adresse;
+                + ", date de naissance=" + dateNaissance + ", adresse=" + adresse + ", telephone=" + telephone;
     }
     
     /* Enumerations */

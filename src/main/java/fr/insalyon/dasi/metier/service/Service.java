@@ -11,6 +11,7 @@ import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Medium;
 import fr.insalyon.dasi.metier.modele.Personne;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Service {
     public Long inscrireClient(Client client) {
         Long resultat = null;
         JpaUtil.creerContextePersistance();
-        try {
+        try {            
             JpaUtil.ouvrirTransaction();
             clientDao.creer(client);
             JpaUtil.validerTransaction();
@@ -364,6 +365,24 @@ public class Service {
         }
         
         return resultat;
+    }
+    
+    /* Astro API */
+
+    /**
+     * Permet de récupérer des prédictions automatisées selon les niveaux en amour,
+     * santé et travail d'un client.
+     * 
+     * @param client Le client pour lequel on doit faire une "prédiction personnalisée"
+     * @param amour Son niveau d'amour (1 à 4)
+     * @param sante Son niveau de santé (1 à 4)
+     * @param travail Son niveau de travail (1 à 4)
+     * @return Une liste de trois string : la prédiction en amour, la prédiction
+     * en sante puis la prédiction en travail.
+     * @throws IOException 
+     */
+    public List<String> getPredictions(Client client, int amour, int sante, int travail) throws IOException {
+        return AstroApi.getPredictions(client, amour, sante, travail);
     }
     
 }

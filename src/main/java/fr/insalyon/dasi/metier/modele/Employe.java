@@ -14,8 +14,9 @@ public class Employe extends Personne {
     protected Employe() {
     }
 
-    public Employe(String mail, String motDePasse, String nom, String prenom, Genre genre, String adresse, Date dateNaissance) {
-        super(mail, motDePasse, nom, prenom, genre, adresse, dateNaissance);
+    public Employe(String mail, String motDePasse, String nom, String prenom,
+                   Genre genre, String adresse, String telephone, Date dateNaissance) {
+        super(mail, motDePasse, nom, prenom, genre, adresse, telephone, dateNaissance);
     }
     
     /* Methode */

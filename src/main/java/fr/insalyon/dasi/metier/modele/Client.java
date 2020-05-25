@@ -1,5 +1,7 @@
 package fr.insalyon.dasi.metier.modele;
 
+import fr.insalyon.dasi.metier.service.AstroApi;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Embedded;
@@ -23,10 +25,20 @@ public class Client extends Personne {
     /* Constructeurs */
 
     protected Client() {}
-
-    public Client(ProfilAstral profilAstral, String mail, String motDePasse, String nom, String prenom, Genre genre, String adresse, Date dateNaissance) {
-        super(mail, motDePasse, nom, prenom, genre, adresse, dateNaissance);
-        this.profilAstral = profilAstral;
+    
+    // Méthode privée pour le constructeur public
+    private ProfilAstral recupererProfil()  {
+        try {
+            return AstroApi.recupererProfil(this);
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+    
+    public Client(String mail, String motDePasse, String nom, String prenom,
+                  Genre genre, String adresse, String telephone, Date dateNaissance) {
+        super(mail, motDePasse, nom, prenom, genre, adresse, telephone, dateNaissance);
+        profilAstral = recupererProfil();
     }
     
     /* Methodes */
@@ -41,6 +53,10 @@ public class Client extends Personne {
     
     public void ajouterConsultation(Consultation consultation) {
         this.mesConsultations.add(consultation);
+    }
+    
+    public List<Consultation> getConsultations() {
+        return mesConsultations;
     }
     
     @Override
