@@ -9,6 +9,7 @@ import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Personne;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -112,13 +113,29 @@ public class ConsultationDao {
         return consultation;
     }
     
-    public Consultation obtenirConsultationEnCours(Employe e) {
+    /**
+     * 
+     * @param p La personne dont on recherche la consultation
+     *          en cours <b>(doit être un client ou un employe)</b>
+     * @return La consultation
+     */
+    public Consultation obtenirConsultationEnCours(Personne p) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Consultation> query = em.createQuery(
-                "SELECT c FROM Consultation c WHERE c.dateFin = NULL AND c.employe.id = :id",
-                Consultation.class
-        );
-        query.setParameter("id", e.getId());
+        TypedQuery<Consultation> query;
+        if (p instanceof Employe) {
+            query = em.createQuery(
+                    "SELECT c FROM Consultation c WHERE c.dateFin = NULL AND c.employe.id = :id",
+                    Consultation.class
+            );
+        } else if (p instanceof Client) {
+            query = em.createQuery(
+                    "SELECT c FROM Consultation c WHERE c.dateFin = NULL AND c.client.id = :id",
+                    Consultation.class
+            );
+        } else {
+            return null;
+        }
+        query.setParameter("id", p.getId());
         
         List<Consultation> result = query.getResultList();
         return result.isEmpty() ? null : result.get(0);

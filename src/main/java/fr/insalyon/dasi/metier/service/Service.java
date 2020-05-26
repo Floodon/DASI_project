@@ -100,7 +100,7 @@ public class Service {
      * @return  La consultation créée, null si aucun employe
      *          valide n'est disponible pour le moment
      */
-    public Consultation demanderConsultation(Client c, Medium m) {
+    public Consultation demanderConsultation(Client c, Medium m) {        
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
         try {
@@ -118,16 +118,16 @@ public class Service {
     }
     
     /**
-     * Retourne, si elle existe, la consultation en cours liée à l'employe donné
-     * @param e L'employe dont on recherche la consultation en cours
-     * @return La consultation que l'employe effectue actuellement, null si
-     * l'employe est disponible
+     * Retourne, si elle existe, la consultation en cours liée à la personne donnée
+     * @param p La personne dont on recherche la consultation en cours
+     * @return La consultation que la personne effectue actuellement, null si
+     * aucune consultation n'est en cours.
      */
-    public Consultation obtenirConsultationEnCours(Employe e) {
+    public Consultation obtenirConsultationEnCours(Personne p) {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
         try {
-            resultat = consultationDao.obtenirConsultationEnCours(e);
+            resultat = consultationDao.obtenirConsultationEnCours(p);
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service obtenirConsultationEnCours(consultation)", ex);
             resultat = null;
