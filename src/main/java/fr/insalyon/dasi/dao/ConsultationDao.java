@@ -159,7 +159,7 @@ public class ConsultationDao {
         }
         
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        c.setDateDebut(new Date());
+        c.setDateFin(new Date());
         c.setCommentaire(commentaire);
         em.merge(c);
         
