@@ -21,9 +21,6 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- */
 public class Service {
 
     /* DAO nécessaires aux services */
@@ -308,6 +305,27 @@ public class Service {
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service clientsParEmploye()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        
+        return resultat;
+    }
+    
+    /**
+     * Renvoie le nombre de consultations que le medium m a effectué
+     * @param m Le médium dont on veut connaître le nombre de consultations effectuées
+     * @return Le nombre de consultations effectuées par m
+     */
+    public Integer nbrConsultations(Medium m) {
+        Integer resultat = 0;
+        
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = consultationDao.nbrConsultationMedium(m);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service NbrConsultationsParMedium()", ex);
             resultat = null;
         } finally {
             JpaUtil.fermerContextePersistance();
