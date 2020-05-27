@@ -22,8 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
-//        peuplerBDD();
-        testerHistorique();
+        peuplerBDD();
+//        testerHistorique();
 //        initialiserMediums();
 //        testerConsultations();
 //        testerInscriptionClient();
