@@ -23,19 +23,19 @@ import javax.persistence.TypedQuery;
  */
 public class ConsultationDao {
     
-    public List<Consultation> listerConsultations(Employe e, Client c, Medium m, Date asked, Date begin, Date end) {
+    public List<Consultation> listerConsultations(String empName, String clientName, String medName, Date asked, Date begin, Date end) {
         
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
         List<String> conditions = new LinkedList<>();
-        if (e != null) {
-            conditions.add("c.employe.id = " + e.getId());
+        if (empName != null) {
+            conditions.add("c.employe.nom || ' ' || c.employe.prenom || ' ' || c.employe.nom LIKE %" + empName + "%");
         }
-        if (c != null) {
-            conditions.add("c.client.id = " + c.getId());
+        if (clientName != null) {
+            conditions.add("c.client.nom || ' ' || c.client.prenom || ' ' || c.client.nom LIKE %" + clientName + "%");
         }
-        if (m != null) {
-            conditions.add("c.medium.id = " + m.getId());
+        if (medName != null) {
+            conditions.add("c.medium.denomination LIKE %" + medName + "%");
         }
         if (asked != null) {
             conditions.add("c.dateDemande BETWEEN '" + df.format(asked) + ":00:00:00.000' AND '" + df.format(asked) + ":23:59:59.999'");
@@ -59,7 +59,37 @@ public class ConsultationDao {
         
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC", Consultation.class);
-        //System.out.println("\n\n\n" + "SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC" + "\n\n\n");
+
+        return query.getResultList();
+    }
+    
+    public List<Consultation> listerConsultations(Employe e, Client c, Medium m) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        
+        List<String> conditions = new LinkedList<>();
+        if (e != null) {
+            conditions.add("c.employe.id = " + e.getId());
+        }
+        if (c != null) {
+            conditions.add("c.client.id = " + c.getId());
+        }
+        if (m != null) {
+            conditions.add("c.medium.id = " + m.getId());
+        }
+        
+        StringBuilder where = new StringBuilder();
+        conditions.forEach((cond) -> {
+            if (where.length() == 0)
+                where.append(" WHERE ");
+            else
+                where.append(" AND ");
+            
+            where.append(cond);
+        });
+        
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c" + where + " ORDER BY c.dateDemande ASC", Consultation.class);
+
         return query.getResultList();
     }
     

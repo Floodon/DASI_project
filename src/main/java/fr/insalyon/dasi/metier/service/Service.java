@@ -274,18 +274,33 @@ public class Service {
      * Crée puis retourne la liste des consultations filtrés par les champs
      * en paramètre (un paramètre null indique qu'aucun filtre particulier n'est
      * a utiliser pour le champ en question).
-     * @param e     Champ employe
-     * @param c     Champ client
-     * @param m     Champ medium
-     * @param asked Date de demande (seule la date est importante, pas le timestamp)
-     * @param begin Date de début (seule la date est importante, pas le timestamp)
-     * @param end   Date de fin (seule la date est importante, pas le timestamp)
-     * @return      Une liste de consultation respectant les critères de recherches.
+     * @param empName    Champ employe
+     * @param clientName Champ client
+     * @param medName    Champ medium
+     * @param asked      Date de demande (seule la date est importante, pas le timestamp)
+     * @param begin      Date de début (seule la date est importante, pas le timestamp)
+     * @param end        Date de fin (seule la date est importante, pas le timestamp)
+     * @return           Une liste de consultation respectant les critères de recherches.
      */
-    public List<Consultation> listerConsultations(Employe e, Client c, Medium m, Date asked, Date begin, Date end) {
+    public List<Consultation> listerConsultations(String empName, String clientName, String medName, Date asked, Date begin, Date end) {
         // Lambda expression pour pouvoir utiliser la méthode listerConsultation
         // en paramètre de "listerObjets()"
-        return listerObjets(() -> consultationDao.listerConsultations(e, c, m, asked, begin, end), Consultation.class);
+        return listerObjets(() -> consultationDao.listerConsultations(empName, clientName, medName, asked, begin, end), Consultation.class);
+    }
+    
+    /**
+     * Crée puis retourne la liste des consultations filtrés par les champs
+     * en paramètre (un paramètre null indique qu'aucun filtre particulier n'est
+     * a utiliser pour le champ en question).
+     * @param e Champ employe
+     * @param c Champ client
+     * @param m Champ medium
+     * @return  Une liste de consultation respectant les critères de recherches.
+     */
+    public List<Consultation> listerConsultations(Employe e, Client c, Medium m) {
+        // Lambda expression pour pouvoir utiliser la méthode listerConsultation
+        // en paramètre de "listerObjets()"
+        return listerObjets(() -> consultationDao.listerConsultations(e, c, m), Consultation.class);
     }
 
     /* Autres services */
