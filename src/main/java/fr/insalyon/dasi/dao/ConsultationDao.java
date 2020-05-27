@@ -29,13 +29,13 @@ public class ConsultationDao {
         
         List<String> conditions = new LinkedList<>();
         if (empName != null) {
-            conditions.add("c.employe.nom || ' ' || c.employe.prenom || ' ' || c.employe.nom LIKE %" + empName + "%");
+            conditions.add("LOWER(c.employe.nom || ' ' || c.employe.prenom || ' ' || c.employe.nom) LIKE '%" + empName.toLowerCase() + "%'");
         }
         if (clientName != null) {
-            conditions.add("c.client.nom || ' ' || c.client.prenom || ' ' || c.client.nom LIKE %" + clientName + "%");
+            conditions.add("LOWER(c.client.nom || ' ' || c.client.prenom || ' ' || c.client.nom) LIKE '%" + clientName.toLowerCase() + "%'");
         }
         if (medName != null) {
-            conditions.add("c.medium.denomination LIKE %" + medName + "%");
+            conditions.add("LOWER(c.medium.denomination) LIKE '%" + medName.toLowerCase() + "%'");
         }
         if (asked != null) {
             conditions.add("c.dateDemande BETWEEN '" + df.format(asked) + ":00:00:00.000' AND '" + df.format(asked) + ":23:59:59.999'");
