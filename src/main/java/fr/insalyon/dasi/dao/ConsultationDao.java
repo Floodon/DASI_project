@@ -29,10 +29,10 @@ public class ConsultationDao {
         
         List<String> conditions = new LinkedList<>();
         if (empName != null) {
-            conditions.add("LOWER(c.employe.nom || ' ' || c.employe.prenom || ' ' || c.employe.nom) LIKE '%" + empName.toLowerCase() + "%'");
+            conditions.add("LOWER(CONCAT(c.employe.nom, ' ', c.employe.prenom, ' ', c.employe.nom)) LIKE '%" + empName.toLowerCase() + "%'");
         }
         if (clientName != null) {
-            conditions.add("LOWER(c.client.nom || ' ' || c.client.prenom || ' ' || c.client.nom) LIKE '%" + clientName.toLowerCase() + "%'");
+            conditions.add("LOWER(CONCAT(c.client.nom, ' ', c.client.prenom, ' ', c.client.nom)) LIKE '%" + clientName.toLowerCase() + "%'");
         }
         if (medName != null) {
             conditions.add("LOWER(c.medium.denomination) LIKE '%" + medName.toLowerCase() + "%'");
@@ -44,7 +44,7 @@ public class ConsultationDao {
             conditions.add("c.dateDebut BETWEEN '" + df.format(begin) + ":00:00:00.000' AND '" + df.format(begin) + ":23:59:59.999'");
         }
         if (end != null) {
-            conditions.add("c.dateFin = '" + df.format(end) + ":00:00:00.000' AND '" + df.format(end) + ":23:59:59.999'");
+            conditions.add("c.dateFin BETWEEN '" + df.format(end) + ":00:00:00.000' AND '" + df.format(end) + ":23:59:59.999'");
         }
         
         StringBuilder where = new StringBuilder();

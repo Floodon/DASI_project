@@ -389,7 +389,7 @@ public class Service {
             resultat = mediumDao.listerMediums();
             resultat.sort((m1, m2) -> consultationDao.nbrConsultationMedium(m2) - consultationDao.nbrConsultationMedium(m1));
             nbrToKeep = nbrToKeep > resultat.size() ? resultat.size() : nbrToKeep;
-            resultat.subList(0, nbrToKeep);
+            resultat.subList(0, nbrToKeep-1);
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service topMedium()", ex);
             resultat = null;

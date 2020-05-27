@@ -22,7 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         JpaUtil.init();
-        peuplerBDD();
+//        peuplerBDD();
+        testerHistorique();
 //        initialiserMediums();
 //        testerConsultations();
 //        testerInscriptionClient();
@@ -134,6 +135,13 @@ public class Main {
             }
         } finally {
             em.close();
+        }
+    }
+    
+    public static void testerHistorique() {
+        Service service = new Service();
+        for (Consultation c : service.listerConsultations("", "", "", new Date(120, 04, 23, 15, 33, 32), new Date(120, 04, 23, 15, 33, 32), new Date(120, 04, 23, 15, 33, 32))) {
+            System.out.println(c);
         }
     }
     
