@@ -42,46 +42,94 @@ public class Main {
     }
     
     public static void peuplerBDD() {        
-        Medium k = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
-        Medium d = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
-        Client c = new Client("mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.HOMME, "11 avenue des arts", "0601020304", new Date(70, 0, 1));
-        Client c2 = new Client("mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi", "0709080706", new Date(70, 6, 6));
-        Employe e = new Employe("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", "0612345678", new Date(95, 27, 9));
-        Employe e2 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", "0611121314", new Date(92, 4, 3));
-        Employe e3 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", "0722334455", new Date(89, 12, 12));
+        Medium m1 = new Astrologue("K-Laurie", Genre.FEMME, "K-Laurie lit votre avenir dans votre nourriture !", "2004", "Université de diétologie de Krisp");
+        Medium m2 = new Astrologue("Dr. Igeste", Genre.HOMME, "Le Dr. Igeste pourra tout vous dire en ne connaissant que vos légumes !", "2002", "Université de diétologie de Krisp");
+        Medium m3 = new Spirite("Mme Irma", Genre.FEMME, "Mme Irma est la plus ancienne de nos spirites. Communication avec l'outremonde garantie !", "Boule de cristal");
+        Medium m4 = new Cartomancien("Raoult le magnifique", Genre.HOMME, "Grace à ses notices médicales diverses et variées, Raoult saura tout vous dire sur votre santé à venir");
+        Medium m5 = new Cartomancien("Valérie", Genre.FEMME, "Valérie est avant tout notre comptable, mais elle est aussi capable de voir votre avenir économique grace à vos factures.");
+        Medium m6 = new Spirite("Lorem", Genre.HOMME, "Ipsum Dolor Amet", "Un site de lorem isum");
+        
+        Client c1 = new Client("mathieu.chappe@insa-lyon.fr", "Rrrreeee", "Chappe", "Mathieu", Genre.AUTRE, "11 avenue des arts, 69100 Villeurbanne", "0601020304", new Date(70, 0, 1));
+        Client c2 = new Client("mathieu.ranzamar@insa-lyon.fr", "C0mpr1s!", "Ranzamar", "Mathieu", Genre.HOMME, "88 rue du n'importe quoi, 31000 Toulouse", "0709080706", new Date(70, 6, 6));
+        Client c3 = new Client("guillaume.berthomet@insa-lyon.fr", "DASI", "Berthomet", "Guillaume", Genre.HOMME, "11 avenue Albert Einstein, 69100 Villeurbanne", "0601020304", new Date(98, 4, 8));
+        Client c4 = new Client("corentin.forler@insa-lyon.fr", "DASI", "Forler", "Corentin", Genre.HOMME, "11 avenue Albert Einstein, 69100 Villeurbanne", "0601020304", new Date(99, 11, 31));
+        Client c5 = new Client("nutella@gmail.com", "Ch0c0-N0isette", "Cajun", "Amandine", Genre.FEMME, "85 rue Lorem Ipsum", "0612345678", new Date(95, 27, 9));
+        Client c6 = new Client("idk@hotmail.com", "I really don't know", "Crownguard", "Luxanna", Genre.FEMME, "1 allée des Mageseekers, Demacia", "0606060606", new Date(94, 05, 21));
+        Client c7 = new Client("sneaky@gmail.com", "IH4TETianna", "DuCouteau", "Katarina", Genre.FEMME, "Manoir Du Couteau, Noxus", "0688994455", new Date(92, 10, 1));
+        
+        Employe e1 = new Employe("confiture@gmail.com", "Fr4ise#Cr4nberry", "Vanille", "Clementine", Genre.FEMME, "70 rue Dolor Amet", "0611121314", new Date(92, 4, 3));
+        Employe e2 = new Employe("mangue-passion@gmail.com", "1_<3_P1N3apple", "Melba", "Madeleine", Genre.FEMME, "42 impasse Whatever", "0722334455", new Date(89, 12, 12));
+        Employe e3 = new Employe("froid@hotmail.fr", "4rcticSoC00l", "Neige", "Vincent", Genre.HOMME, "36 rue du Blizzard, Vancouver", "+1 894 531 25", new Date(95, 3, 19));
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DASI-PU");
         EntityManager em = emf.createEntityManager();
         
-        Consultation consult = new Consultation(new Date(), c2, e, d);
-        Consultation consult2 = new Consultation(new Date(), c, e2, k);
-        consult2.setDateDebut(new Date());
-        consult2.setDateFin(new Date());
-        consult2.setCommentaire("Commentaire intéressant");
-        Consultation consult3 = new Consultation(new Date(), c, e2, k);
+        Consultation consult1 = new Consultation(new Date(120, 04, 23, 15, 33, 32), c2, e3, m2);
+        Consultation consult2 = new Consultation(new Date(120, 04, 24, 10, 18, 56), c1, e2, m3);
+        Consultation consult3 = new Consultation(new Date(120, 04, 24, 17, 9, 02), c3, e3, m4);
+        Consultation consult4 = new Consultation(new Date(120, 04, 26, 14, 23, 48), c3, e1, m1);
+        Consultation consult5 = new Consultation(new Date(120, 04, 23, 9, 0, 17), c5, e2, m1);
+        Consultation consult6 = new Consultation(new Date(120, 04, 27, 13, 19, 42), c2, e2, m3);
+        
+        consult1.setDateDebut(new Date(120, 4, 23, 15, 48, 9));
+        consult1.setDateFin(new Date(120, 4, 23, 16, 03, 53));
+        consult1.setCommentaire("Client... Intéressant. Vous pouvez dire un peu ce que vous voulez.");
+        
+        consult2.setDateDebut(new Date(120, 04, 24, 10, 25, 18));
+        consult2.setDateFin(new Date(120, 04, 24, 10, 59, 2));
+        consult2.setCommentaire("Pour une fois, un client heureux. Il suffit de lui dire que tout continuera de bien se passer.");
+        
+        consult3.setDateDebut(new Date(120, 04, 24, 17, 13, 33));
+        consult3.setDateFin(new Date(120, 4, 24, 17, 29, 45));
+        consult3.setCommentaire("La santé et l'amour vont, mais il a un peu de mal au travail. Appuyez sur des prédictions positives dans ce domaine.");
+        
+        consult4.setDateDebut(new Date(120, 04, 26, 15, 33, 47));
+        consult4.setDateFin(new Date(120, 04, 26, 16, 12, 9));
+        consult4.setCommentaire("RAS, consultation très courte.");
+        
+        consult5.setDateDebut(new Date(120, 04, 23, 9, 5, 1));
+        consult5.setDateFin(new Date(120, 04, 23, 9, 49, 7));
+        consult5.setCommentaire("Elle a beaucoup aimé la consultation. Prenez un ton calme et posé avec elle.");
+        
+        consult6.setDateDebut(new Date(120, 04, 27, 13, 22, 42));
+        consult6.setDateFin(new Date(120, 04, 27, 13, 34, 42));
+        consult6.setCommentaire("Je lui ai dit que sa femme finirait par le quitter... Il est clair qu'il est désespéré.");
         
         try {
             em.getTransaction().begin();
             
-            em.persist(k);
-            em.persist(d);
-            em.persist(c);
+            em.persist(m1);
+            em.persist(m2);
+            em.persist(m3);
+            em.persist(m4);
+            em.persist(m5);
+            em.persist(m6);
+            
+            em.persist(c1);
             em.persist(c2);
-            em.persist(e);
+            em.persist(c3);
+            em.persist(c4);
+            em.persist(c5);
+            em.persist(c6);
+            em.persist(c7);
+            
+            em.persist(e1);
             em.persist(e2);
             em.persist(e3);
             
-            em.persist(consult);
+            em.persist(consult1);
             em.persist(consult2);
             em.persist(consult3);
+            em.persist(consult4);
+            em.persist(consult5);
+            em.persist(consult6);
             
             em.getTransaction().commit();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service", ex);
             try {
                 em.getTransaction().rollback();
-            }
-            catch (IllegalStateException ex2) {
+            } catch (IllegalStateException ex2) {
                 // Ignorer cette exception...
             }
         } finally {
